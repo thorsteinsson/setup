@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+xcode-select --install
+
+# Install brew
+if test ! $(which brew); then
+  echo “Installing brew…”
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew analytics off
+fi
+brew update
+
+BREWS=(
+  # Jump to folders using a part of the name: https://github.com/wting/autojump
+  autojump
+  
+  # Alternative to `cat`: https://github.com/sharkdp/bat
+  bat
+
+  # Github util
+  hub
+
+  # Fuzzy finder
+  fzf
+
+  # HTTP client alternative to curl https://github.com/jkbrzt/httpie
+  httpie
+
+  # Mac App Store CLI: https://github.com/mas-cli/mas
+  mas
+
+  # Development tools
+  yarn
+
+  # Node version manager
+  Schniz/tap/fnm
+)
+brew install ${BREWS[@]}
+
+CASKS=(
+  # Development tools
+  visual-studio-code
+  gitup
+  kitematic
+  docker
+
+  # Browsers
+  google-chrome
+  firefox
+
+  # Other apps
+  1password
+  slack
+  spotify
+
+  # Your own wiki
+  notion
+
+  # Set the brightness depending of the time of the day
+  flux
+
+  # Monitor network traffic from apps (and block what you want)
+  little-snitch
+
+  # Monitor microphone usage
+  micro-snitch
+
+  # Window manager
+  amethyst
+)
+brew cask install ${CASKS[@]}
+
+
+# Install fonts
+brew tap caskroom/fonts
+FONTS=(
+  font-roboto
+)
+brew cask install ${FONTS[@]}
+
+# Install global node packages
+PACKAGES=(
+  expo-cli
+)
+yarn global add ${PACKAGES[@]} 
+
+echo “Configuring OS…”
+
+# Fast key repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 0
+
+# Show file extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Enable tap to click for trackpad
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
