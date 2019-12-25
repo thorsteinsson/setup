@@ -1,0 +1,192 @@
+[user]
+  name = Aegir Thorsteinsson
+  email = aegir@thorsteinsson.is
+  username = thorsteinsson
+
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+
+[push]
+  default = matching
+
+[color]
+  ui = auto
+
+[log]
+  # Better date formats in logs
+  date = rfc
+
+[core]
+  excludesfile = ~/.gitignore
+
+[diff]
+  tool = kdiff3
+
+[alias]
+  # View a pretty git log with branch tree
+  slog = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  graph = log --graph --decorate --stat --date=iso --all
+
+  # See changes between branches
+  changes = "!f() { git log --pretty=format:'* %s' $1..$2; }; f"
+
+  # See everything I have done recently
+  remind = log --oneline --no-merges --author=aegir@thorsteinsson.is
+
+  # Show very last commit
+  last = log --oneline -1
+
+  # Show our last tag
+  last-tag = describe --abbrev=0 --tags
+
+  # See today’s work
+  today = log --since=\"00:00:00\" --all --no-merges --oneline --author=aegir@thorsteinsson.is
+
+  # Empty line between results from different files.
+  find = "!git grep --break -C1"
+
+  # See which commits are on your local branch that aren’t on the remote
+  local = "! git log --oneline --no-merges origin/$(git rev-parse --abbrev-ref HEAD).."
+
+  # See which commits are on the remote that aren’t on your local branch
+  upstream = "! git fetch && git log --oneline --no-merges ..origin/$(git rev-parse --abbrev-ref HEAD)"
+
+  # Show your ten most recently checked out branches
+  recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format="%(refname:short)"
+  
+  # Undo the last commit, but preserve the staging area
+  undo = reset --soft HEAD^
+  
+  # It’s nice to be nice
+  praise = blame
+
+  # Show number of commits from all authors.
+  stats = shortlog -sn --all --no-merges
+
+  # Start a new local repository and perform initial commit
+  new = !git init && git add . && git commmit -m \"Initial commit.\"
+
+  # Clone from Github
+  clone-github = !sh -c 'git clone git://github.com/$1 $(basename $1)' -
+  clone-my-github = !sh -c 'git clone git@github.com:$(git config --get user.username)/$1 $1' -
+
+  snapshot = !git stash save 'snapshot: $(date)' && git stash apply 'stash@{0}'
+
+  whois = !sh -c 'git log -i -1 --author=\"$1\" --pretty=\"format:%an <%ae>\"' -
+
+  # Show the diff between the latest commit and the current state
+  state = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+  # Status
+  short-status = status -s
+
+  # Set remotes
+  set-origin = remote set-url origin
+  set-upstream = remote set-url upstream
+
+  # Abort/continue rebasing
+  abort = rebase --abort
+  continue = rebase --continue
+
+  # Show conflicts
+  conflicts = !git diff --name-only --diff-filter=U
+
+  # Switch to a branch, creating it if necessary
+  go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+
+  # Amend the currently staged files to the latest commit
+  amend = commit --amend --reuse-message=HEAD
+
+  # Sneak changes into your previous commit
+  sneak = commit -a --amend --no-edit
+
+  # Credit an author on the latest commit
+  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+  # Interactive rebase with the given number of latest commits
+  reb = "!r() { git rebase -i HEAD~$1; }; r"
+
+  # Remove the old tag with this name and tag the latest commit with it.
+  retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+
+  # List contributors with number of commits
+  contributors = shortlog --summary --numbered
+
+  # Which files are receiving the most "love"
+  churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 "," $2}'
+  
+  # Get the current branch name (not so useful in itself, but used in other aliases)
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+  # Push the current branch to the remote "origin", and set it to track
+  # the upstream branch
+  publish = "!git push -u origin $(git branch-name)"
+  # Delete the remote version of the current branch
+  unpublish = "!git push origin :$(git branch-name)"
+  # Delete a branch and recreate it from master — useful if you have, say,
+  # a development branch and a master branch and they could conceivably go
+  # out of sync
+  recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
+
+  # Force push current branch
+  force-push = !git push --set-upstream origin $(git branch-name)
+
+  # Fire up your difftool (e.g. Kaleidescope) with all the changes that
+  # are on the current branch.
+  code-review = difftool origin/master...
+
+  # Given a merge commit, find the span of commits that exist(ed) on that
+  # branch. Again, not so useful in itself, but used by other aliases.
+  merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+
+  # Find the commits that were introduced by a merge
+  merge-log = "!git log `git merge-span .. $1`"
+  # Show the changes that were introduced by a merge
+  merge-diff = "!git diff `git merge-span ... $1`"
+  # As above, but in your difftool
+  merge-difftool = "!git difftool `git merge-span ... $1`"
+
+  # Interactively rebase all the commits on the current branch
+  rebase-branch = "!git rebase -i `git merge-base master HEAD`"
+
+  #
+  # Working with files
+  #
+
+  # Unstage any files that have been added to the staging area
+  unstage = reset HEAD
+
+  # Show changes that have been staged
+  diffc = diff --cached
+
+  # Delete any branches that have been merged into master
+  delete-merged-branches = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+  wip = commit -am "WIP"
+
+# URL shorthands
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+  insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+
+[url "https://bitbucket.org/"]
+  insteadOf = bb:
