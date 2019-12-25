@@ -132,3 +132,22 @@ CODE_EXTENSIONS=(
   vetur # Vue
 )
 code --install-extension ${CODE_EXTENSIONS[@]}
+
+echo "Oh my zsh plugins…"
+# Spaceship theme
+git clone https://github.com/denysdovhan/spaceship-prompt.git $ZSH_CUSTOM/themes/spaceship-prompt
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+# Better directory listing with k
+git clone https://github.com/supercrabtree/k.git $ZSH_CUSTOM/plugins/k
+# Show alias for the command being run
+git clone https://github.com/djui/alias-tips.git $ZSH_CUSTOM/plugins/alias-tips
+# Jump between directories with z
+git clone https://github.com/rupa/z.git $ZSH_CUSTOM/plugins/z
+# Clear terminal when running new commands
+git clone https://github.com/Valiev/almostontop.git $ZSH_CUSTOM/plugins/almostontop
+# More completions
+git clone https://github.com/zsh-users/zsh-completions.git $ZSH_CUSTOM/plugins/zsh-completions
+# Syntax highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+# Auto suggestions from history
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
