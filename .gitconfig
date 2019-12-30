@@ -70,7 +70,7 @@
   new = !git init && git add . && git commmit -m \"Initial commit.\"
 
   # Clone from Github
-  clone-github = !sh -c 'git clone git://github.com/$1 $(basename $1)' -
+  clone-github = !sh -c 'git clone https://github.com/$1 $(basename $1)' -
   clone-my-github = !sh -c 'git clone git@github.com:$(git config --get user.username)/$1 $1' -
 
   snapshot = !git stash save 'snapshot: $(date)' && git stash apply 'stash@{0}'
