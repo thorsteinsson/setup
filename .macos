@@ -198,7 +198,7 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 # Fast key repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 2
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 # Enable tap to click for trackpad
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
