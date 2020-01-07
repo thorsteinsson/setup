@@ -102,6 +102,9 @@ CASKS=(
 
   # Kdiff 3 for code diffing (removed from cask)
   https://raw.githubusercontent.com/Homebrew/homebrew-cask/6a96e5ea44803e52a43c0c89242390f75d1581ab/Casks/kdiff3.rb
+
+  # Adobe creative cloud
+  adobe-creative-cloud
 )
 brew cask install ${CASKS[@]}
 
