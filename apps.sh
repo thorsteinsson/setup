@@ -52,6 +52,8 @@ BREWS=(
 )
 brew install ${BREWS[@]}
 
+'eval "$(fnm env)"' >> ~/.zprofile
+
 CASKS=(
   # Development tools
   visual-studio-code
