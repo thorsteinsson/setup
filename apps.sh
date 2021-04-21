@@ -38,7 +38,7 @@ BREWS=(
   yarn
 
   # Node version manager
-  Schniz/tap/fnm
+  fnm
 
   # File watcher from Facebook
   watchman
