@@ -111,7 +111,7 @@ CASKS=(
   # Adobe creative cloud
   adobe-creative-cloud
 )
-brew cask install ${CASKS[@]}
+brew install --cask ${CASKS[@]}
 
 mas install 497799835 # XCode
 mas install 410628904 # Wunderlist
