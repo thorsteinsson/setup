@@ -1,9 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Brew path
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # Use fnm for node versions
 eval "`fnm env --multi`"
 
