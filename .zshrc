@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 # Use fnm for node versions
-eval "`fnm env --multi`"
+eval "`fnm env`"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="spaceship"
