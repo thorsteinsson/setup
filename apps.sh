@@ -103,8 +103,9 @@ brew tap homebrew/cask-fonts
 FONTS=(
   font-roboto
   font-fira-code
+  font-meslo-for-powerline
 )
-brew cask install ${FONTS[@]}
+brew install --cask ${FONTS[@]}
 
 # Install yarn
 npm i -g yarn
