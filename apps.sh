@@ -3,11 +3,7 @@
 # Install brew
 if test ! $(which brew); then
   echo “Installing brew…”
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  
-  # Brew path
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-  'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   brew analytics off
 fi
@@ -23,7 +19,7 @@ BREWS=(
   bat
 
   # Github util
-  hub
+  gh
 
   # Fuzzy finder
   fzf
@@ -34,16 +30,11 @@ BREWS=(
   # Mac App Store CLI: https://github.com/mas-cli/mas
   mas
 
-  # Development tools
-  yarn
-
   # Node version manager
   fnm
 
   # File watcher from Facebook
   watchman
-
-  docker-compose
 
   heroku
 
@@ -58,10 +49,8 @@ CASKS=(
   # Development tools
   visual-studio-code
   gitup
-  kitematic
   docker
   android-studio
-  pgadmin4
 
   # Browsers
   google-chrome
@@ -70,16 +59,10 @@ CASKS=(
   # Other apps
   1password
   slack
-  spotify
+  tidal
 
   # Set the brightness depending of the time of the day
   flux
-
-  # Monitor network traffic from apps (and block what you want)
-  little-snitch
-
-  # Monitor microphone usage
-  micro-snitch
 
   # Window manager
   amethyst
@@ -91,24 +74,18 @@ CASKS=(
   harvest
 
   # Emails
-  missive
+  superhuman
 
   # Dev docs
   dash
 
   # Design
-  sketch
+  figma
 
   java
 
-  # Quicklook in finder
-  quicklook-json
-  qlmarkdown
-  qlstephen
-  qlcolorcode
-
-  # Kdiff 3 for code diffing (removed from cask)
-  https://raw.githubusercontent.com/Homebrew/homebrew-cask/6a96e5ea44803e52a43c0c89242390f75d1581ab/Casks/kdiff3.rb
+  # Kdiff 3 for code diffing
+  kdiff3
 
   # Adobe creative cloud
   adobe-creative-cloud
@@ -116,7 +93,6 @@ CASKS=(
 brew install --cask ${CASKS[@]}
 
 mas install 497799835 # XCode
-mas install 410628904 # Wunderlist
 
 # Install fonts
 brew tap homebrew/cask-fonts
@@ -126,11 +102,13 @@ FONTS=(
 )
 brew cask install ${FONTS[@]}
 
+# Install yarn
+npm i -g yarn
+
 # Install global node packages
 PACKAGES=(
   expo-cli
   typescript
-  @vue/cli
   eslint
 )
 yarn global add ${PACKAGES[@]}
@@ -139,7 +117,6 @@ echo "VS Code packages…"
 CODE_EXTENSIONS=(
   prettier
   eslint
-  vetur # Vue
 )
 code --install-extension ${CODE_EXTENSIONS[@]}
 
