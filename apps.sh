@@ -126,9 +126,8 @@ CODE_EXTENSIONS=(
 code --install-extension ${CODE_EXTENSIONS[@]}
 
 echo "Oh my zsh plugins…"
-# Spaceship theme
-git clone https://github.com/denysdovhan/spaceship-prompt.git $ZSH_CUSTOM/themes/spaceship-prompt
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+# Powerlevel 10k theme
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 # Better directory listing with k
 git clone https://github.com/supercrabtree/k.git $ZSH_CUSTOM/plugins/k
 # Show alias for the command being run
