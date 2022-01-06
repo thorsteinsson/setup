@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -5,7 +12,7 @@ export ZSH=$HOME/.oh-my-zsh
 eval "`fnm env`"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel10k/powerlevel10k" # old one: spaceship
 
 plugins=(k z almostontop docker docker-compose node npm)
 plugins+=(zsh-completions zsh-autosuggestions zsh-syntax-highlighting)
@@ -13,6 +20,9 @@ plugins+=(zsh-completions zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR="code"
+
+# Autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 ############### ALIASES ###############
 # List all files colorized in long format
@@ -30,3 +40,39 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 
 alias prof="$EDITOR ~/.zshrc"
 alias reprof="source ~/.zshrc"
+
+# Git aliases
+alias gl="git pull"
+alias gp="git publish"
+alias gco="git checkout"
+
+alias grow="pipenv run grow"
+
+alias wstorm="open -a /Applications/WebStorm.app"
+
+andev() {
+  adb -s "$1" reverse tcp:8081 tcp:8081
+}
+
+# Ruby
+export PATH="$PATH:/usr/local/opt/ruby/bin"
+
+# Android Studio
+export ANDROID_HOME="/Users/aegir/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/tools/bin"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+# Auto load node version with fnm
+autoload -U add-zsh-hook
+_fnm_autoload_hook() {
+	if [[ -f .nvmrc && -r .nvmrc || -f .node-version && -r .node-version ]]; then
+		fnm use
+	fi
+}
+
+add-zsh-hook chpwd _fnm_autoload_hook
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

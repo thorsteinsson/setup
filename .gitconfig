@@ -21,6 +21,7 @@
 
 [core]
   excludesfile = ~/.gitignore
+  editor = vim
 
 [diff]
   tool = kdiff3
@@ -59,6 +60,7 @@
   
   # Undo the last commit, but preserve the staging area
   undo = reset --soft HEAD^
+  revert-last = revert HEAD~1
   
   # It’s nice to be nice
   praise = blame
@@ -102,6 +104,9 @@
   branches = branch -a
   remotes = remote -v
 
+  # Delete merged branches
+  clean-branches = "!f() { git branch --merged | egrep -v \"(^\\*|master)\" | xargs git branch -d; }; f"
+
   # Amend the currently staged files to the latest commit
   amend = commit --amend --reuse-message=HEAD
 
@@ -136,7 +141,7 @@
   recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
 
   # Force push current branch
-  force-push = !git push --set-upstream origin $(git branch-name)
+  force-push = !git push -f --set-upstream origin $(git branch-name)
 
   # Fire up your difftool (e.g. Kaleidescope) with all the changes that
   # are on the current branch.
@@ -190,3 +195,5 @@
 
 [url "https://bitbucket.org/"]
   insteadOf = bb:
+[pull]
+	ff = only
