@@ -46,7 +46,8 @@ BREWS=(
 )
 brew install ${BREWS[@]}
 
-'eval "$(fnm env)"' >> ~/.zprofile
+echo 'eval "$(fnm env)"' >> ~/.zprofile
+eval "$(fnm env)"
 
 CASKS=(
   # Development tools
