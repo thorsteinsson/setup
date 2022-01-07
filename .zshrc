@@ -11,6 +11,9 @@ export ZSH=$HOME/.oh-my-zsh
 # Use fnm for node versions
 eval "`fnm env`"
 
+# No telemetry for yarn
+yarn config set --home enableTelemetry 0
+
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k" # old one: spaceship
 
