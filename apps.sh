@@ -52,6 +52,7 @@ eval "$(fnm env)"
 CASKS=(
   # Development tools
   visual-studio-code
+  webstorm
   gitup
   docker
   android-studio
