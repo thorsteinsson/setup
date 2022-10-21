@@ -56,6 +56,7 @@ CASKS=(
   gitup
   docker
   android-studio
+  postman
 
   # Browsers
   google-chrome
@@ -75,9 +76,6 @@ CASKS=(
   # Your own wiki
   notion
 
-  # Track your time
-  harvest
-
   # Emails
   superhuman
 
@@ -87,13 +85,14 @@ CASKS=(
   # Design
   figma
 
-  java
-
   # Kdiff 3 for code diffing
   kdiff3
 
   # Adobe creative cloud
   adobe-creative-cloud
+
+  # Meetings
+  zoom
 )
 brew install --cask ${CASKS[@]}
 

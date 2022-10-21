@@ -1,3 +1,6 @@
+# No telemetry for yarn
+yarn config set --home enableTelemetry 0 > /dev/null
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -10,9 +13,6 @@ export ZSH=$HOME/.oh-my-zsh
 
 # Use fnm for node versions
 eval "`fnm env`"
-
-# No telemetry for yarn
-yarn config set --home enableTelemetry 0
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k" # old one: spaceship
